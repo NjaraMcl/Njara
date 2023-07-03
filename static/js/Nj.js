@@ -47,6 +47,10 @@ axios.get('/api/Teacher-list')
             editButton.classList.add('text-center', 'edit-button');
             editButtonCell.appendChild(editButton);
             row.appendChild(editButtonCell);
+            // Add event listener to edit button
+            editButton.addEventListener('click', function() {
+                openEditModal(rowData.id);
+            });
 
             const deleteButtonCell = document.createElement('td');
             const deleteButton = document.createElement('button');
@@ -100,4 +104,7 @@ function deleteTeacher(teacherId) {
         // Handle the error here
       });
   }
-  
+
+  function openEditModal(teacherId) {
+    console.log('open edit modal', {teacherId});
+}

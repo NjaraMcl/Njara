@@ -79,7 +79,27 @@ input,button,textarea,select {
     margin-inline: auto;
     max-width: 80rem;
 }
+.grid-container {
+    border: 5px solid limegreen;
+    display: grid;
+}
 
+@media (min-width: 45em) {
+    .grid-container {
+        column-gap: var(--container-gap, 2rem);
+        grid-template-columns: minmax(2rem, 1fr) repeat(2, minmax(0, 30rem)) minmax(2rem, 1fr);
+    }
+    
+    .grid-container > *:first-child {
+        grid-column: 2;
+        outline: 1px solid red;
+    }
+
+    .grid-container > *:last-child {
+        grid-column: 3;
+        outline: 1px solid yellow;
+    }
+}
 body {
     text-decoration: none;
     font-family: var(--ff-sans-normal);
