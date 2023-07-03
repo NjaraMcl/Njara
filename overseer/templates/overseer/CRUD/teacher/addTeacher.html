@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+{% block cont %}
+<div class="card-body">
+    <div class="container-fluid">
+        <form id="addTeacherForm" method="POST">
+            {% csrf_token %}
+            <div class="mdc-layout-grid">
+                <div class="mdc-layout-grid__inner">
+                    {% for field in form %}
+                    <div class="form-group mb-3">
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+                    <button class="w-100 btn btn-ghost sign-up" type="submit">Add</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock cont %}
+{% block scripts %}
+<script>
+    document.getElementById('addTeacherForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+
+        const form = event.target;
+        const formData = new FormData(form); // Get the form data
+
+        const csrfToken = getCookie('csrftoken'); // Retrieve the CSRF token from a cookie
+
+        axios.post('/api/Teacher-create/', formData, {
+            headers: {
+                'X-CSRFToken': csrfToken, // Add the CSRF token to the request headers
+            },
+        })
+            .then(function (response) {
+                console.log('Teacher added successfully:', response.data);
+                // Handle the response or perform any additional actions here
+                window.location.href = '/o_listTeacher/'; // Redirect to the teacher list page
+            })
+            .catch(function (error) {
+                console.error('Error adding teacher:', error);
+                // Handle the error here
+            });
+    });
+
+    // Function to retrieve the value of a cookie by name
+    function getCookie(name) {
+        const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+        return cookieValue ? cookieValue.pop() : '';
+    }
+</script>
+{% endblock scripts %}

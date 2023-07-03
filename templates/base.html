@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Nj Mcl" />
+    <!-- Webpage Title -->
+    {% if page_title %}
+    <title>{{ page_title }}</title>
+    {% else %}
+    <title>School Management System</title>
+    {% endif %}
+    <!-- Bootstrap CSS -->
+  
+    <!-- Font-Awesome CSS -->
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}" />
+    <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome.min.css'%}" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/CoreBase.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/navi.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/utility.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/otherscss.css' %}" />
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
+    <!-- Axios -->
+    <script src="{% static 'js/axios/axios.min.js'%}"></script>
+    {% block scripts %}
+    <!-- Scripts Goes here -->
+    {% endblock scripts %} 
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+    <div class="nj-container">
+    {% block cont %}
+      <!-- Content Goes here -->
+    {% endblock cont %}
+    </div> 
+    <br />
+    {% include 'footer.html' %} 
+    
+    <!-- Custom -->
+    <script src="{% static 'js/navMenu.js'%}"></script>
+    <script src="{% static 'js/some.js'%}"></script>
+    
+  </body>
+</html>

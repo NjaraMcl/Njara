@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block cont %}
+<div class="">
+    <div class="tools">
+        <a class="" href="{% url 'overseer:AddTeacher' %}"
+            title="Add Class"><i class="fa fa-solid fa-plus"></i> Add Teacher
+        </a>
+        </a>
+    </div>
+    
+    <div class="" id="teacherlist-warper">
+    
+    </div>
+</div>
+{% endblock cont %}
+{% block scripts %}
+<script src="{% static 'js/ApiNj.js'%}"></script>
+{% endblock scripts %}

@@ -1,0 +1,84 @@
+{% load static %}
+<!-- Navigation -->
+<header class="nj-header nj-flex">
+  <div>
+    <a href="{% url 'main:home' %}">
+      <img src="{% static 'img/logo.png' %}" alt="Logo" class="nj-logo"/>
+    </a>
+  </div>
+
+  <button class="mobile-nav-toggle" aria-controls="nj-navigation">
+    <span class="sr-only" aria-expanded="false">Menu</span>
+  </button>
+
+  <nav>
+    <ul id="nj-navigation" data-visible="false" class="nj-navigation nj-flex">
+      <li>
+        <a href="{% url 'main:home' %}" class="uppercase nj-flex">
+          <span class="menu-icon"><i class="fa fa-light fa-school"></i></span>
+          <span class="menu-title" id="Home">Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="uppercase nj-flex">
+          <span class="menu-icon"><i class="fa fa-light fa-school"></i></span>
+          <span class="menu-title">News</span>
+        </a>
+      </li>
+      {% if user.is_authenticated %}
+        {% if user.is_overseer %}
+          <li>
+            <a href="{% url 'overseer:o_listTeacher' %}" class="uppercase nj-flex">
+              <span class="menu-icon"><i class="fa fa-light fa-school"></i></span>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+        {% endif %}
+      {% else %}
+        <li>
+          <a href="" class="uppercase nj-flex isDisabled">
+            <span class="menu-icon"><i class="fa fa-light fa-school"></i></span>
+            <span class="menu-title" id="Home">Dashboard</span>
+          </a>
+        </li>
+      {% endif %}
+      <div class="nj-nav-right nj-flex">
+        {% if user.is_authenticated %}
+          <li id="nj-btn-dropdown">
+            <a href="#" class="uppercase nj-flex">
+              <span class="menu-icon"><img src="{{ user.profile.image.url }}" class="user_avatar"></span>
+              <span class="menu-title nj-username" id="nj-username">{{ user.get_username }}</span>
+            </a>
+          </li>
+          <div class="nj-dropdown" id="nj-dropdown">
+            <li>
+              <a href="#" class="uppercase nj-flex">
+                <span class="menu-icon"><i class="fa fa-thin fa-arrow-right-from-bracket"></i></span>
+                <span class="menu-title">Profil</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="uppercase nj-flex">
+                <span class="menu-icon"><i class="fa fa-thin fa-arrow-right-from-bracket"></i></span>
+                <span class="menu-title">Logout</span>
+              </a>
+            </li>
+          </div>
+          {% else %}
+          <li>
+            <a href="#" class="">
+              <span class="menu-icon"><i class="fa fa-thin fa-arrow-right-to-bracket"></i></span>
+              
+            </a>
+          </li>
+          <li>
+            <a href="#" class="">
+              <span class="menu-icon"><i class="fa fa-thin fa-user-plus"></i></span>
+              
+            </a>
+          </li>
+        {% endif %}
+      </div>
+    </ul>
+  </nav>  
+</header>
