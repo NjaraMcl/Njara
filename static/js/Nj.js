@@ -103,8 +103,19 @@ function deleteTeacher(teacherId) {
         console.error('Error deleting teacher:', error);
         // Handle the error here
       });
-  }
+}
 
-  function openEditModal(teacherId) {
-    console.log('open edit modal', {teacherId});
+function openEditModal(teacherId) {
+    const njmodal = document.getElementById("nj-modal");
+    const njoverlay = document.getElementById("overlay");
+    njmodal.classList.remove("hidden");
+    njoverlay.classList.remove("hidden");
+}
+
+
+function closeEditeModal() {
+    const njmodal = document.getElementById("nj-modal");
+    const njoverlay = document.getElementById("overlay");
+    njmodal.classList.add("hidden");
+    njoverlay.classList.add("hidden");
 }
