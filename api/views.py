@@ -1,9 +1,11 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import get_user_model
 from .serializers import TeacherSerializer
-
 from main.models import Teacher
+
+User = get_user_model()
 
 
 @api_view(["GET"])
@@ -23,11 +25,10 @@ def TeacherDetail(request, pk):
 @api_view(["POST"])
 def TeacherCreate(request):
     serializer = TeacherSerializer(data=request.data)
-
     if serializer.is_valid():
         serializer.save()
-
-    return Response(serializer.data)
+        return Response(serializer.data)
+    return Response(serializer.errors, status=400)
 
 
 @api_view(["POST"])
@@ -45,6 +46,9 @@ def TeacherUpdate(request, pk):
 @permission_classes([IsAuthenticated])
 def TeacherDelete(request, pk):
     teacher = Teacher.objects.get(id=pk)
+    t_user = teacher.t_user
+    user = User.objects.get(id=t_user.id)
+    user.delete()
     teacher.delete()
 
     return Response("Teacher succsesfully delete!")

@@ -29,14 +29,6 @@ def create_user_for_teacher(sender, instance, created, **kwargs):
             is_visitor=False,
             is_teacher=True,
         )
-        instance.user = user  # Link the user to the teacher
+        instance.t_user = user  # Link the user to the teacher
         instance.slug = slugify(instance.nom + "-" + instance.prenom)
         instance.save()
-
-
-@receiver(pre_delete, sender=Teacher)
-def delete_user_teacher(sender, instance, **kwargs):
-    # Delete the associated User object if it exists
-    if instance.t_user:
-        t_user = User.objects.get(username=instance.t_user.username)
-        t_user.delete()

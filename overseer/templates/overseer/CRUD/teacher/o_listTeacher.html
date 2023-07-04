@@ -13,16 +13,17 @@
     
     </div>
     <section class="nj-modal hidden" id="nj-modal">
-        <div class="flex">
-            <h1 class="">Teacher</h1>
-            <button class="modal-btn-close" id="modal-btn-close"onclick="closeEditeModal()"><i class="fa fa-light fa-circle-xmark"></i></button>
-        </div>
-        <div>
-          <h3>Stay in touch</h3>
-          <p>
-            This is a dummy newsletter form so don't bother trying to test it. Not
-            that I expect you to, anyways. :)
-          </p>
+        <div class="nj-card">
+            <div class="flex">
+                <h4 class=""></h4>
+                <button class="modal-btn-close" id="modal-btn-close"onclick="closeEditeModal()"><i class="fa fa-light fa-circle-xmark"></i></button>
+            </div>
+            <div class="nj-card-body">
+              <h3 class="nj-card-title" id="nj-card-title"></h3>
+              <div class="nj-card-form" id="nj-card-form">
+              
+              </div>
+            </div>
         </div>
     </section>
     <div class="overlay hidden"id="overlay"></div>
@@ -30,5 +31,5 @@
 
 {% endblock cont %}
 {% block scripts %}
-<script src="{% static 'js/Nj.js'%}"></script>
+<script src="{% static 'js/teacherCRUD.js'%}"></script>
 {% endblock scripts %}

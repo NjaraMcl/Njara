@@ -104,12 +104,95 @@ function deleteTeacher(teacherId) {
         // Handle the error here
       });
 }
+function handleEdit(teacherId) {
+    const csrftoken = getCookie('csrftoken');
+    axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
 
+    axios.get(`/api/Teacher-detail/${teacherId}/`)
+        .then(response => {
+            // Get the data from the response
+            const teacherData = response.data;
+            const formFields = [
+                { label: 'Nom', name: 'nom', value: teacherData.nom },
+                { label: 'Prenom', name: 'prenom', value: teacherData.prenom },
+                { label: 'slug', name: 'slug', value: teacherData.slug },
+                { label: 'Gender', name: 'gender', value: teacherData.gender },
+                { label: 'Birth date', name: 'dob', value: teacherData.dob },
+                { label: 'Birth place', name: 'pob', value: teacherData.pob }
+            ];
+            const formElements = formFields.map(field => {
+                return `
+                  <div class="form-group nj-formLabelImput">
+                    <label for="${field.name}">${field.label}:</label>
+                    <input type="text" id="${field.name}" name="${field.name}" value="${field.value}" class="form-control" required>
+                  </div>
+                `;
+              });
+
+            // Update the modal content with the teacher's data
+            const modalContent = `
+                <form id="editForm" class="editForm">
+                ${formElements.join('')}
+                <button aria-label="Save" type="submit" class="modal-submit-btn btn-primary">Save</button>
+                </form>
+            `;
+
+            // Set the content of the modal
+            const njcardtitle = document.getElementById("nj-card-title");
+            const njcardform = document.getElementById("nj-card-form");
+            njcardtitle.textContent = teacherData.nom + " " + teacherData.prenom;
+            njcardform.innerHTML = modalContent;
+            const editForm = document.getElementById('editForm');
+            editForm.addEventListener('submit', event => handleEditFormSubmit(event, teacherId));
+        })
+    
+        .catch(error => {
+            // Handle any errors
+            console.error(error);
+        });
+}
+function handleEditFormSubmit(event, teacherId) {
+    event.preventDefault();
+  
+    const csrftoken = getCookie('csrftoken');
+    axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
+  
+    const formData = new FormData(event.target);
+    const nom = formData.get('nom');
+    const prenom = formData.get('prenom');
+    const slug = formData.get('slug');
+    const gender = formData.get('gender');
+    const dob = formData.get('dob');
+    const pob = formData.get('pob');
+  
+    axios.post(`/api/Teacher-update/${teacherId}/`, {
+        nom: nom,
+        prenom: prenom,
+        slug: slug,
+        gender: gender,
+        dob: dob,
+        pob: pob,
+      // Include other fields in the request data object
+    })
+      .then(response => {
+        // Handle the response if needed
+        console.log(response.data);
+        window.location.href = '/Teacher/list/'; 
+        // Close the modal or update the UI as desired
+      })
+      .catch(error => {
+        // Handle any errors
+        console.error(error);
+      });
+  }
+  
 function openEditModal(teacherId) {
     const njmodal = document.getElementById("nj-modal");
     const njoverlay = document.getElementById("overlay");
+    
     njmodal.classList.remove("hidden");
     njoverlay.classList.remove("hidden");
+    handleEdit(teacherId)
 }
 
 
@@ -119,3 +202,5 @@ function closeEditeModal() {
     njmodal.classList.add("hidden");
     njoverlay.classList.add("hidden");
 }
+
+
