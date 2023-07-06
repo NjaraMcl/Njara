@@ -6,7 +6,10 @@
     --yankees-blue: #181149;
     --cetacean-blue: #0a0647;
     --mycolor1: #5f0196;
-    --nj-color-1: linear-gradient(90deg, var(--mycolor1) 20%, var(--yankees-blue) 100%);
+    --nj-color-1: linear-gradient(90deg, hsla(45, 100%, 44%, 0.89) 23%, hsla(299, 100%, 50%, 1) 100%);
+    --color: #166e67;
+    --radius: 5px;
+    --shadow: rgba(0, 0, 0, 0.05) 0px 6px 10px 0px,rgba(0, 0, 0, 0.1) 0px 0px 0px 1px;
 
     /* font-families */
     --ff-serif: "Bellefair", serif;
@@ -26,19 +29,16 @@
     box-sizing: border-box;
 }
 
-/* Reset margins */
+/* Reset margins&padding */
 body,h1,h2,h3,h4,h5,p,figure,picture {
     margin: 0; 
+    padding: 0;
 }
 
 h1,h2,h3,h4,h5,h6,p {
     font-weight: 400;
 }
 /* make images easier to work with */
-img,picture {
-
-    display: block;
-}
 /* make form elements easier to work with */
 input,button,textarea,select {
     font: inherit;
@@ -73,10 +73,12 @@ input,button,textarea,select {
 .nj-container {
     padding-inline: 2em;
     margin-inline: auto;
+    margin-top: 2rem;
     max-width: 80rem;
 }
 
 body {
+    text-decoration: none;
     font-family: var(--ff-sans-normal);
     color: hsl( var(--clr-dark) );
     background-color: hsl( var(--clr-white) );
@@ -85,23 +87,4 @@ body {
     display: grid;
     grid-template-rows: min-content 1fr;
     overflow-x: hidden;
-}
-.sr-only {
-    position: absolute; 
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px; 
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap; /* added line */
-    border: 0;
-  }
-
-.uppercase { 
-    text-transform: uppercase; 
-}
-
-.text-center{
-    text-align: center;
 }

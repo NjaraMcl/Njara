@@ -1,9 +1,36 @@
+.sr-only {
+    position: absolute; 
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px; 
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap; /* added line */
+    border: 0;
+  }
+
+.uppercase { 
+    text-transform: uppercase; 
+}
+.capitalize {
+    text-transform: capitalize;
+}
+.text-center{
+    text-align: center;
+}
+.text-bold {
+    font-weight: bold;
+}
+.text-red {
+    color: red;
+}
 .form-group {
     margin-bottom: 15px;
 }
 
 .form-control {
-    display: block;
+    display:flex;
     width: 100%;
     height: 34px;
     padding: 6px 12px;
@@ -22,4 +49,15 @@
     transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+}
+
+.not-visible {
+    display: none;
+}
+
+.isDisabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
 }
