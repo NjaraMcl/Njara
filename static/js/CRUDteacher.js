@@ -1,4 +1,6 @@
-axios.get('/api/Teacher-list')
+
+function handleTeacherList() {
+    axios.get('/api/Teacher-list')
     .then(response => {
         const data = response.data;
         const table = document.createElement('table');
@@ -74,8 +76,8 @@ axios.get('/api/Teacher-list')
         console.error(error);
         // Handle any errors here
     });
-
-
+}
+handleTeacherList()
 // Function to capitalize the first letter of each word
 function capitalizeFirstLetter(text) {
     return text.replace(/\b\w/g, firstChar => firstChar.toUpperCase());
@@ -116,7 +118,7 @@ function handleEdit(teacherId) {
                 { label: 'Nom', name: 'nom', value: teacherData.nom },
                 { label: 'Prenom', name: 'prenom', value: teacherData.prenom },
                 { label: 'slug', name: 'slug', value: teacherData.slug },
-                { label: 'Gender', name: 'gender', value: teacherData.gender },
+                { label: 'Gender', name: 'gender'},
                 { label: 'Birth date', name: 'dob', value: teacherData.dob },
                 { label: 'Birth place', name: 'pob', value: teacherData.pob }
             ];
@@ -127,13 +129,13 @@ function handleEdit(teacherId) {
                     <input type="text" id="${field.name}" name="${field.name}" value="${field.value}" class="form-control" required>
                   </div>
                 `;
-              });
+            });
 
             // Update the modal content with the teacher's data
             const modalContent = `
                 <form id="editForm" class="editForm">
                 ${formElements.join('')}
-                <button aria-label="Save" type="submit" class="modal-submit-btn btn-primary">Save</button>
+                <button aria-label="Save" type="submit" class="modal-submit-btn">Save</button>
                 </form>
             `;
 
@@ -176,18 +178,22 @@ function handleEditFormSubmit(event, teacherId) {
     })
       .then(response => {
         // Handle the response if needed
-        console.log(response.data);
-        window.location.href = '/Teacher/list/'; 
+        // console.log(response.data);
+        // window.location.href = '/Teacher/list/'; 
+        const teacherlistwarper = document.getElementById('teacherlist-warper');
+        teacherlistwarper.innerHTML = " ";
+        handleTeacherList()
         // Close the modal or update the UI as desired
+        closeModal("nj-modalEdit")
       })
       .catch(error => {
         // Handle any errors
         console.error(error);
       });
-  }
+}
   
 function openEditModal(teacherId) {
-    const njmodal = document.getElementById("nj-modal");
+    const njmodal = document.getElementById("nj-modalEdit");
     const njoverlay = document.getElementById("overlay");
     
     njmodal.classList.remove("hidden");
@@ -195,12 +201,87 @@ function openEditModal(teacherId) {
     handleEdit(teacherId)
 }
 
+function handleCreate() {
+    const formFields = [
+        { label: 'Nom', name: 'nom'},
+        { label: 'Prenom', name: 'prenom'},
+        { label: 'Gender', name: 'gender'},
+        { label: 'Birth date', name: 'dob'},
+        { label: 'Birth place', name: 'pob'}
+    ];
+    const formElements = formFields.map(field => {
+        return `
+          <div class="form-group nj-formLabelImput">
+            <label for="${field.name}">${field.label}:</label>
+            <input type="text" id="${field.name}" name="${field.name}" class="form-control" required>
+          </div>
+        `;
+    });
+    const modalContent = `
+                <form id="createForm" class="createForm">
+                ${formElements.join('')}
+                <button aria-label="Add" type="submit" class="modal-submit-btn">Add</button>
+                </form>
+            `;
+    const njcardtitle = document.getElementById("nj-card-title");
+    const njcardform = document.getElementById("nj-card-createform");
+    njcardtitle.textContent = "";
+    njcardform.innerHTML = modalContent;
+    const createForm = document.getElementById('createForm');
+    createForm.addEventListener('submit', event => handleCreateFormSubmit(event));
+}
 
-function closeEditeModal() {
-    const njmodal = document.getElementById("nj-modal");
+function handleCreateFormSubmit(event){
+    event.preventDefault();
+  
+    const csrftoken = getCookie('csrftoken');
+    axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
+    const formData = new FormData(event.target);
+    // Create the data object for the new item
+    const newItemData = {};
+    for (let [key, value] of formData.entries()) {
+        newItemData[key] = value;
+    }
+    //console.log(newItemData);
+    axios.post('/api/Teacher-create/', { 
+        nom: newItemData.nom,
+        prenom: newItemData.prenom,
+        gender: newItemData.gender,
+        dob: newItemData.dob,
+        pob: newItemData.pob,
+    })
+    .then(response => {
+        // Handle the response from the API
+        // console.log("New item created:", response.data);
+        // window.location.href = '/Teacher/list/'; 
+        // Perform any necessary UI updates or redirect to a different page
+        const teacherlistwarper = document.getElementById('teacherlist-warper');
+        teacherlistwarper.innerHTML = " ";
+        handleTeacherList()
+        // Close the modal or update the UI as desired
+        closeModal("nj-modalCreate")
+    })
+    //.catch(error => {
+        // Handle any errors that occurred during the API request
+        //console.error("Error creating item:", error);
+        // Perform any necessary error handling or display error messages to the user
+    //});
+}
+function openCreateModal() {
+    const njmodal = document.getElementById("nj-modalCreate");
+    const njoverlay = document.getElementById("overlay");
+    
+    njmodal.classList.remove("hidden");
+    njoverlay.classList.remove("hidden");
+    handleCreate()
+}
+
+function closeModal(modal) {
+    const njmodal = document.getElementById(modal);
     const njoverlay = document.getElementById("overlay");
     njmodal.classList.add("hidden");
     njoverlay.classList.add("hidden");
 }
+
 
 

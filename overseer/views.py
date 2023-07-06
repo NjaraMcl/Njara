@@ -40,8 +40,14 @@ class AddTeacher(LoginRequiredMixin, FormView):
 # Retrive teacher
 class o_listTeacher(LoginRequiredMixin, generic.TemplateView):
     template_name = "overseer/CRUD/teacher/o_listTeacher.html"
+    form_class = addTeacherForm
 
     def get(self, request, *args, **kwargs):
         listTeacher = Teacher.objects.all()
-        context = {"listTeacher": listTeacher, "page_title": "List Teacher"}
+        form = self.form_class()
+        context = {
+            "listTeacher": listTeacher,
+            "Addform": form,
+            "page_title": "List Teacher",
+        }
         return render(request, self.template_name, context)

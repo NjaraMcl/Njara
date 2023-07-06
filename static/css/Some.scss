@@ -64,11 +64,11 @@
                 color: hsla(211, 100%, 50%, 1);
                 margin-bottom: 0.75rem;
             }
-            .nj-card-form{
+            .nj-card-form, .nj-card-createform {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                .editForm{
+                .editForm, .createForm {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
@@ -88,7 +88,6 @@
                         }
                     }
                     .modal-submit-btn {
-                        justify-content:end;
                         font-size: 1rem;
                         border-radius: 0.6rem;
                         border-color: hsla(211, 100%, 50%, 1);
@@ -110,7 +109,6 @@
                         }
                     }
                 }
-
             }
         }
     }
