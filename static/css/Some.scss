@@ -18,7 +18,18 @@
 .delete-button{
     color: red;
 }
-
+.addBtn{
+    cursor: pointer;
+    background: transparent;
+    color: blue;
+    border: 2px solid blue;
+    border-radius: 15px;
+    transition: background-color 0.3s ease;
+    &:hover {
+        background-color: blue;
+        color: white;
+    }
+}
 .nj-modal {
     display: flex;
     flex-direction: column;
