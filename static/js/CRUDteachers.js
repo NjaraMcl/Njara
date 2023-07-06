@@ -7,76 +7,101 @@ function handleTeacherList() {
         const tableBody = document.createElement('tbody');
 
         if (data.length === 0) {
-            const noDataParagraph = document.createElement('p');
-            noDataParagraph.classList.add('text-center', 'uppercase', 'text-red', 'text-bold');
-            noDataParagraph.textContent = 'No Data';
-            const element = document.getElementById('teacherlist-warper');
-            element.appendChild(noDataParagraph);
-            return;
+            const spinnerElement = document.getElementById('spinner'); 
+            setTimeout(() => {
+                    spinnerElement.classList.add('spinnerNotVisible');
+                
+                    const noDataParagraph = document.createElement('p');
+                    noDataParagraph.classList.add('text-center', 'uppercase', 'text-red', 'text-bold');
+                    noDataParagraph.textContent = 'No Data ';
+                    const iconElement = document.createElement('i');
+                    iconElement.classList.add('fa-solid', 'fa-triangle-exclamation', 'fa-fade');
+                    noDataParagraph.appendChild(iconElement);
+                    const element = document.getElementById('teacherlist-warper');
+                    element.appendChild(noDataParagraph);
+                    return;
+                }, 500
+            );
+        } else {
+            const spinnerElement = document.getElementById('spinner'); 
+            setTimeout(() => {
+                    spinnerElement.classList.add('spinnerNotVisible');
+        
+                    const headers = Object.keys(data[0]);
+                    // Create table header row
+                    const headerRow = document.createElement('tr');
+                    headers.forEach(header => {
+                        if (!['id', 'slug', 'dob', 'pob', 'date_added', 'date_updated', 't_user'].includes(header)) { // Exclude multiple headers
+                            const th = document.createElement('th');
+                            th.textContent = capitalizeFirstLetter(header); // Capitalize first letter of header
+                            headerRow.appendChild(th);
+                        }
+                    });
+                    // Add additional headers for the edit and delete buttons
+                    const editHeader = document.createElement('th');
+                    editHeader.textContent = 'Edit';
+                    editHeader.classList.add('editHeader');
+                    headerRow.appendChild(editHeader);
+                    const deleteHeader = document.createElement('th');
+                    deleteHeader.textContent = 'Delete';
+                    deleteHeader.classList.add('deleteHeader');
+                    headerRow.appendChild(deleteHeader);
+                    tableBody.appendChild(headerRow);
+                    // Create table rows with data
+                    data.forEach(rowData => {
+                        const row = document.createElement('tr');
+
+                        headers.forEach(header => {
+                            if (!['id', 'slug', 'dob', 'pob', 'date_added', 'date_updated', 't_user'].includes(header)) { // Exclude multiple headers
+                                const cell = document.createElement('td');
+                                cell.textContent = rowData[header];
+                                // Add a class to the td element
+                                cell.classList.add('text-center', 'uppercase');
+                                row.appendChild(cell);
+                            }
+                        });
+                        // Create dropdown container for edit and delete buttons
+                        const dropdownCell = document.createElement('td');
+                        dropdownCell.classList.add('dropdown-cell');
+                        // Create dropdown toggle button
+                        const iconEllipsisVerticalElement = document.createElement('i');
+                        iconEllipsisVerticalElement.classList.add('fa-regular', 'fa-ellipsis-vertical');
+                        dropdownCell.appendChild(iconEllipsisVerticalElement);
+                        // Add edit and delete buttons to each row
+                        const editButtonCell = document.createElement('td');
+                        const editButton = document.createElement('button');
+                        editButton.innerHTML = '<span class="btn-icon"><i class="fa fa-edit"></i></span> <span class="btn-name">Edit</span>';
+                        editButton.classList.add('text-center', 'edit-button');
+                        editButtonCell.classList.add('editButtonCell');
+                        editButtonCell.appendChild(editButton);
+                        row.appendChild(editButtonCell);
+                        // Add event listener to edit button
+                        editButton.addEventListener('click', function() {
+                            openEditModal(rowData.id);
+                        });
+
+                        const deleteButtonCell = document.createElement('td');
+                        const deleteButton = document.createElement('button');
+                        deleteButton.innerHTML = '<span class="btn-icon"><i class="fa fa-trash"></i></span> <span class="btn-name">Delete</span>';
+                        deleteButton.classList.add('text-center', 'delete-button');
+                        deleteButtonCell.classList.add('deleteButtonCell');
+                        deleteButtonCell.appendChild(deleteButton);
+                        row.appendChild(deleteButtonCell);
+                        // Add event listener to delete button
+                        deleteButton.addEventListener('click', function() {
+                            deleteTeacher(rowData.id);
+                        });
+
+                        tableBody.appendChild(row);
+                    });
+
+                    table.appendChild(tableBody);
+                    table.classList.add('table-with-border');
+                    const element = document.getElementById('teacherlist-warper');
+                    element.appendChild(table);
+                }, 500
+            );
         }
-        const headers = Object.keys(data[0]);
-        // Create table header row
-        const headerRow = document.createElement('tr');
-        headers.forEach(header => {
-            if (!['id', 'slug', 'dob', 'pob', 'date_added', 'date_updated', 't_user'].includes(header)) { // Exclude multiple headers
-                const th = document.createElement('th');
-                th.textContent = capitalizeFirstLetter(header); // Capitalize first letter of header
-                headerRow.appendChild(th);
-            }
-        });
-        // Add additional headers for the edit and delete buttons
-        const editHeader = document.createElement('th');
-        editHeader.textContent = 'Edit';
-        headerRow.appendChild(editHeader);
-
-        const deleteHeader = document.createElement('th');
-        deleteHeader.textContent = 'Delete';
-        headerRow.appendChild(deleteHeader);
-
-        tableBody.appendChild(headerRow);
-
-        // Create table rows with data
-        data.forEach(rowData => {
-            const row = document.createElement('tr');
-
-            headers.forEach(header => {
-                if (!['id', 'slug', 'dob', 'pob', 'date_added', 'date_updated', 't_user'].includes(header)) { // Exclude multiple headers
-                    const cell = document.createElement('td');
-                    cell.textContent = rowData[header];
-                    // Add a class to the td element
-                    cell.classList.add('text-center', 'uppercase');
-                    row.appendChild(cell);
-                }
-            });
-            // Add edit and delete buttons to each row
-            const editButtonCell = document.createElement('td');
-            const editButton = document.createElement('button');
-            editButton.innerHTML = '<span class="btn-icon"><i class="fa fa-edit"></i></span> <span class="btn-name">Edit</span>';
-            editButton.classList.add('text-center', 'edit-button');
-            editButtonCell.appendChild(editButton);
-            row.appendChild(editButtonCell);
-            // Add event listener to edit button
-            editButton.addEventListener('click', function() {
-                openEditModal(rowData.id);
-            });
-
-            const deleteButtonCell = document.createElement('td');
-            const deleteButton = document.createElement('button');
-            deleteButton.innerHTML = '<span class="btn-icon"><i class="fa fa-trash"></i></span> <span class="btn-name">Delete</span>';
-            deleteButton.classList.add('text-center', 'delete-button');
-            deleteButtonCell.appendChild(deleteButton);
-            row.appendChild(deleteButtonCell);
-            // Add event listener to delete button
-            deleteButton.addEventListener('click', function() {
-                deleteTeacher(rowData.id);
-            });
-
-            tableBody.appendChild(row);
-        });
-
-        table.appendChild(tableBody);
-        const element = document.getElementById('teacherlist-warper');
-        element.appendChild(table);
     })
     .catch(function (error) {
         console.error(error);
@@ -84,6 +109,7 @@ function handleTeacherList() {
     });
 }
 handleTeacherList()
+
 // Function to capitalize the first letter of each word
 function capitalizeFirstLetter(text) {
     return text.replace(/\b\w/g, firstChar => firstChar.toUpperCase());
@@ -121,12 +147,12 @@ function handleEdit(teacherId) {
             // Get the data from the response
             const teacherData = response.data;
             const formFields = [
-                { label: 'Nom', name: 'nom', value: teacherData.nom },
-                { label: 'Prenom', name: 'prenom', value: teacherData.prenom },
-                { label: 'slug', name: 'slug', value: teacherData.slug },
-                { label: 'Gender', name: 'gender'},
-                { label: 'Birth date', name: 'dob', value: teacherData.dob },
-                { label: 'Birth place', name: 'pob', value: teacherData.pob }
+                { label: 'Nom', name: 'nom', value: teacherData.nom, placeholder: ' Nom' },
+                { label: 'Prenom', name: 'prenom', value: teacherData.prenom, placeholder: ' Prenom' },
+                { label: 'slug', name: 'slug', value: teacherData.slug, placeholder: ' Slug' },
+                { label: 'Gender', name: 'gender', value: teacherData.gender, placeholder: ' Gender' },
+                { label: 'Birth date', name: 'dob', value: teacherData.dob, placeholder: ' Birth Date' },
+                { label: 'Birth place', name: 'pob', value: teacherData.pob, placeholder: ' Birth Place' }
             ];
             const formElements = formFields.map(field => {
                 return `
@@ -209,17 +235,17 @@ function openEditModal(teacherId) {
 
 function handleCreate() {
     const formFields = [
-        { label: 'Nom', name: 'nom'},
-        { label: 'Prenom', name: 'prenom'},
-        { label: 'Gender', name: 'gender'},
-        { label: 'Birth date', name: 'dob'},
-        { label: 'Birth place', name: 'pob'}
+        { label: 'Nom', name: 'nom', placeholder: ' Nom' },
+        { label: 'Prenom', name: 'prenom', placeholder: ' Prenom' },
+        { label: 'Gender', name: 'gender', placeholder: ' Gender' },
+        { label: 'Birth date', name: 'dob', placeholder: ' Birth Date' },
+        { label: 'Birth place', name: 'pob', placeholder: ' Birth Place' }
     ];
     const formElements = formFields.map(field => {
         return `
           <div class="form-group nj-formLabelImput">
             <label for="${field.name}">${field.label}:</label>
-            <input type="text" id="${field.name}" name="${field.name}" class="form-control" required>
+            <input type="text" id="${field.name}" name="${field.name}" placeholder="${field.placeholder}" class="form-control" required>
           </div>
         `;
     });

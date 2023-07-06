@@ -1,14 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
 {% block cont %}
-<div class="">
+<div class="nj-grid text-center">
     <div class="tools">
-        <button class="addBtn" onclick="openCreateModal()"><i class="fa fa-solid fa-plus"></i> Add Teacher</button>
+        <button class="addBtn" onclick="openCreateModal()"><i class="fa fa-solid fa-plus fa-beat"></i> Add Teacher</button>
+    </div> 
+    
+    <div id="spinner" class="text-center">
+        <i class="fa fa-solid fa-spinner fa-spin-pulse spinner-bg"></i>
     </div>
     
     <div class="" id="teacherlist-warper">
-    
+        
     </div>
+    
     <section class="nj-modal hidden" id="nj-modalEdit">
         <div class="nj-card">
             <div class="flex">
@@ -29,7 +34,7 @@
                 <h4 class=""></h4>
                 <button class="modal-btn-close" id="modal-btn-close" onclick="closeModal('nj-modalCreate')"><i class="fa fa-light fa-circle-xmark"></i><span class="sr-only">Close</span></button>
             </div>
-            <div class="nj-card-body">
+            <div class="nj-card-body nj-flex">
               <h3 class="nj-card-title" id="nj-card-title"></h3>
               <div class="nj-card-createform" id="nj-card-createform">
                 
@@ -42,5 +47,5 @@
 
 {% endblock cont %}
 {% block scripts %}
-<script src="{% static 'js/CRUDteacher.js'%}"></script>
+<script src="{% static 'js/CRUDteachers.js'%}"></script>
 {% endblock scripts %}
