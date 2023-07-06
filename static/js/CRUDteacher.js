@@ -5,12 +5,18 @@ function handleTeacherList() {
         const data = response.data;
         const table = document.createElement('table');
         const tableBody = document.createElement('tbody');
-        
 
+        if (data.length === 0) {
+            const noDataParagraph = document.createElement('p');
+            noDataParagraph.classList.add('text-center', 'uppercase', 'text-red', 'text-bold');
+            noDataParagraph.textContent = 'No Data';
+            const element = document.getElementById('teacherlist-warper');
+            element.appendChild(noDataParagraph);
+            return;
+        }
+        const headers = Object.keys(data[0]);
         // Create table header row
         const headerRow = document.createElement('tr');
-        const headers = Object.keys(data[0]);
-
         headers.forEach(header => {
             if (!['id', 'slug', 'dob', 'pob', 'date_added', 'date_updated', 't_user'].includes(header)) { // Exclude multiple headers
                 const th = document.createElement('th');
