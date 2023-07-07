@@ -1,40 +1,52 @@
 // Media Queries
 @media (max-width: 35rem) {
-    .btn-name {
-      display: none;
-    }
+  .btn-name {
+    display: none;
+  }
 }
-  
+
 @media (min-width: 35rem) and (max-width: 40rem) {
-    // Add your styles for this media query
+  // Add your styles for this media query
 }
-  
+
 // Buttons
 .edit-button,
 .delete-button,
 .modal-btn-close {
-    cursor: pointer;
-    border: none;
-    background: transparent;
+  cursor: pointer;
+  border: none;
+  background: transparent;
 }
-  
+
 .addBtn {
-    cursor: pointer;
-    background: transparent;
-    color: blue;
-    padding: 10px;
-    border: 1px solid blue;
-    border-radius: 15px;
-    transition: background-color 0.5s ease;
-  
-    &:hover {
-      background-color: blue;
-      color: white;
-    }
+  cursor: pointer;
+  background: transparent;
+  color: blue;
+  padding: 10px;
+  border: 1px solid blue;
+  border-radius: 15px;
+  transition: background-color 0.5s ease;
+
+  &:hover {
+    background-color: blue;
+    color: white;
+  }
 }
-  
+
 // Modal
 .nj-modal {
+  position: absolute;
+  padding: 1.3rem;
+  top: 20%;
+  z-index: 2;
+  width: 100%;
+  min-height: 250px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  gap: 0.4rem;
+
+  @media (min-width: 35rem) {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -47,189 +59,224 @@
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 15px;
-    z-index: 2;
-  
-    @media (max-width: 35rem) {
-      position: absolute;
-      width: auto;
-    }
-  
-    @media (min-width: 35rem) and (max-width: 40rem) {
-      position: relative;
-    }
-  
-    .flex {
-      display: flex;
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .modal-btn-close {
+    transform: translate(10px, -20px);
+    padding: 0.5rem 0.7rem;
+  }
+
+  .nj-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: none;
+    border-radius: 0.25rem;
+
+    .nj-card-body {
+      flex: 1 1 auto;
+      min-height: 1px;
+      padding: 1.25rem;
       align-items: center;
-      justify-content: space-between;
-    }
-  
-    .modal-btn-close {
-      transform: translate(10px, -20px);
-      padding: 0.5rem 0.7rem;
-    }
-  
-    .nj-card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      word-wrap: break-word;
-      background-color: #fff;
-      background-clip: border-box;
-      border: none;
-      border-radius: 0.25rem;
-  
-      .nj-card-body {
-        flex: 1 1 auto;
-        min-height: 1px;
-        padding: 1.25rem;
+      justify-content: center;
+
+      .nj-card-title {
+        color: hsla(211, 100%, 50%, 1);
+        margin-bottom: 0.75rem;
+      }
+
+      .nj-card-form,
+      .nj-card-createform {
+        display: flex;
         align-items: center;
-        justify-content: center;
-  
-        .nj-card-title {
-          color: hsla(211, 100%, 50%, 1);
-          margin-bottom: 0.75rem;
-        }
-  
-        .nj-card-form,
-        .nj-card-createform {
+        justify-content: space-evenly;
+
+        .editForm,
+        .createForm {
           display: flex;
+          flex-direction: column;
           align-items: center;
-          justify-content: space-evenly;
-  
-          .editForm,
-          .createForm {
+          justify-content: center;
+
+          .nj-formLabelImput {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-  
-            .nj-formLabelImput {
-              display: flex;
-              justify-items: center;
-              margin-right: auto;
-              width: 100%;
-  
-              label {
+            justify-items: center;
+            margin-right: auto;
+            width: 100%;
+
+            label {
+              display: none;
+              @media (min-width: 35rem) {
+                display: block;
                 position: relative;
-                width: 30%;
-  
-                @media (max-width: 35rem) {
-                  display: none;
-                }
+                width: 45%;
               }
-  
-              input {
+            }
+            input {
+              width: auto;
+              @media (min-width: 35rem) {
                 position: relative;
                 width: 70%;
-  
-                @media (max-width: 35rem) {
-                  width: 100%;
-                }
-              }
-  
-              @media (min-width: 35rem) {
-                input::placeholder {
+                &::placeholder {
                   color: transparent;
                 }
               }
             }
-  
-            .modal-submit-btn {
-              font-size: 1rem;
-              border-radius: 0.6rem;
-              border-color: hsla(211, 100%, 50%,1);
-              color: hsla(211, 100%, 60%, 1);
-              text-align: center;
-              text-decoration: none;
-              transition-duration: 0.4s;
-              background-color: transparent;
-  
-              &:hover {
-                cursor: pointer;
-                background-color: hsla(211, 100%, 50%, 1);
-                color: white;
-              }
-  
-              &:not(:disabled):not(.disabled) {
-                cursor: pointer;
-              }
+          }
+
+          .modal-submit-btn {
+            font-size: 1rem;
+            border: 1px solid hsla(211, 100%, 50%, 1);
+            border-radius: 0.6rem;
+            color: hsla(211, 100%, 60%, 1);
+            text-align: center;
+            text-decoration: none;
+            transition-duration: 0.4s;
+            background-color: transparent;
+
+            &:hover {
+              cursor: pointer;
+              background-color: hsla(211, 100%, 50%, 1);
+              color: white;
+            }
+            &:not(:disabled):not(.disabled) {
+              cursor: pointer;
             }
           }
         }
       }
     }
+  }
 }
-  
+
 // Overlay
 .overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background: hsla(0, 0%, 0%, 0.5);
-    backdrop-filter: blur(3px);
-    z-index: 1;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: hsla(0, 0%, 0%, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 1;
 }
-  
+
 // Hidden Class
 .hidden {
-    display: none;
+  display: none;
 }
-  
+
 // Table
 .table-with-border {
-    border-collapse: collapse;
-    width: 100%;
-  
-    th,
-    td {
-      padding: 10px;
-      text-align: center;
-    }
-  
-    & {
-      .editHeader,
-      .deleteHeader {
-        display: none;
-      }
-  
-      .editButtonCell,
-      .deleteButtonCell {
-        background-color: hsl(var(--clr-white));
-      }
-    }
-  
-    th {
-      background-color: #f2f2f2;
-      font-weight: bold;
-    }
-  
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-  
-    tr:hover {
-      background-color: #ebebeb;
-    }
-  
+  border-collapse: collapse;
+  width: 100%;
+
+  th,
+  td {
+    padding: 10px;
+    text-align: center;
+  }
+
+  & {
     .editHeader,
     .deleteHeader {
-      text-align: center;
+      display: none;
     }
-  
-    & {
-      .edit-button {
-        color: blue;
-      }
-  
-      .delete-button {
-        color: red;
-      }
+
+    .editButtonCell,
+    .deleteButtonCell {
+      background-color: hsl(var(--clr-white));
     }
+  }
+
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  tr:hover {
+    background-color: #ebebeb;
+  }
+
+  .editHeader,
+  .deleteHeader {
+    text-align: center;
+  }
+
+  & {
+    .edit-button {
+      color: blue;
+    }
+
+    .delete-button {
+      color: red;
+    }
+  }
 }
-  
+.dropdown-cell {
+  position: relative;
+
+  .dropdown-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .dropdown-content {
+    position: absolute;
+    right: 50%;
+    bottom: 100%;
+    z-index: 3;
+    display: none;
+    width: auto;
+    padding: 8px;
+    background-color: hsla(360, 100%, 100%, 1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    @media (min-width: 35rem) {
+      position: absolute;
+      display: flex;
+      flex-direction: row;
+      float: left;
+      bottom: 100%;
+      right: 50%;
+      z-index: 3;
+      display: none;
+      padding: 8px;
+      background-color: hsla(360, 100%, 100%, 1);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .edit-button, .delete-button {
+      @media (min-width: 35rem) {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+      }
+      &:hover {
+        background-color: #f1f1f1;
+      }
+    }
+    .edit-button{
+      color: blue;
+    }
+
+    .delete-button {
+      color: red;
+    }
+  }
+}

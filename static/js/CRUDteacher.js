@@ -60,37 +60,75 @@ function handleTeacherList() {
                                 row.appendChild(cell);
                             }
                         });
-                        // Create dropdown container for edit and delete buttons
+                        
+                        // Create dropdown cell for edit and delete buttons
                         const dropdownCell = document.createElement('td');
                         dropdownCell.classList.add('dropdown-cell');
-                        // Create dropdown toggle button
+
+                        const dropdownButton = document.createElement('button');
+                        dropdownButton.classList.add('dropdown-button');
+                        dropdownButton.setAttribute('id', 'dropdown-button');
+                        // create fontawesome icon <i class="fa-regular fa-ellipsis-vertical"></i> and append it to the dropdown button
                         const iconEllipsisVerticalElement = document.createElement('i');
-                        iconEllipsisVerticalElement.classList.add('fa-regular', 'fa-ellipsis-vertical');
-                        dropdownCell.appendChild(iconEllipsisVerticalElement);
-                        // Add edit and delete buttons to each row
-                        const editButtonCell = document.createElement('td');
+                        iconEllipsisVerticalElement.classList.add('fa','fa-regular', 'fa-ellipsis-vertical');
+                        dropdownButton.appendChild(iconEllipsisVerticalElement);
+
+                        // Action when the dropdow button is clicked
+                        dropdownButton.addEventListener('click', function(event) {
+                            const DropdownContent = document.getElementById('dropdown-content');
+                            if (dropdownContent.style.display === 'block') {
+                                dropdownContent.style.display = 'none';
+                              } else {
+                                dropdownContent.style.display = 'block';
+                                
+                            }
+                            event.stopPropagation();
+                        });
+                        document.addEventListener('click', function() {
+                            const dropdownContents = document.getElementsByClassName('dropdown-content');
+                            for (let i = 0; i < dropdownContents.length; i++) {
+                              dropdownContents[i].style.display = 'none';
+                            }
+                          });
+                        dropdownCell.appendChild(dropdownButton);
+
+                        // create the dropdown content
+                        const dropdownContent = document.createElement('div');
+                        dropdownContent.classList.add('dropdown-content');
+                        dropdownContent.setAttribute('id', 'dropdown-content');
+
                         const editButton = document.createElement('button');
-                        editButton.innerHTML = '<span class="btn-icon"><i class="fa fa-edit"></i></span> <span class="btn-name">Edit</span>';
-                        editButton.classList.add('text-center', 'edit-button');
-                        editButtonCell.classList.add('editButtonCell');
-                        editButtonCell.appendChild(editButton);
-                        row.appendChild(editButtonCell);
-                        // Add event listener to edit button
+                        editButton.classList.add('edit-button');
+
+                        const spanEditbtniconElement = document.createElement('span');
+                        spanEditbtniconElement.classList.add('btn-icon');
+
+                        const iconEditElement = document.createElement('i');
+                        iconEditElement.classList.add('fa', 'fa-edit');
+                        spanEditbtniconElement.appendChild(iconEditElement);
+
+                        const spanEditbtnnameElement = document.createElement('span');
+                        spanEditbtnnameElement.classList.add('btn-name');
+                        spanEditbtnnameElement.textContent = ' Edit';
+
+                        editButton.appendChild(spanEditbtniconElement);
+                        editButton.appendChild(spanEditbtnnameElement);
+                        
                         editButton.addEventListener('click', function() {
                             openEditModal(rowData.id);
                         });
+                        dropdownContent.appendChild(editButton);
 
-                        const deleteButtonCell = document.createElement('td');
                         const deleteButton = document.createElement('button');
                         deleteButton.innerHTML = '<span class="btn-icon"><i class="fa fa-trash"></i></span> <span class="btn-name">Delete</span>';
-                        deleteButton.classList.add('text-center', 'delete-button');
-                        deleteButtonCell.classList.add('deleteButtonCell');
-                        deleteButtonCell.appendChild(deleteButton);
-                        row.appendChild(deleteButtonCell);
-                        // Add event listener to delete button
+                        deleteButton.classList.add('delete-button');
                         deleteButton.addEventListener('click', function() {
                             deleteTeacher(rowData.id);
                         });
+                        dropdownContent.appendChild(deleteButton);
+
+                        dropdownCell.appendChild(dropdownContent);
+                        row.appendChild(dropdownCell);
 
                         tableBody.appendChild(row);
                     });
