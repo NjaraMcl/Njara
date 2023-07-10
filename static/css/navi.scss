@@ -27,8 +27,9 @@
     vertical-align: middle;
     width: 30px;
     height: 30px;
-    border-radius: 50%;
+    border-radius: 50%!important;
 }
+
 @supports (backdrop-filter: blur(1rem)) {
     .nj-navigation {
         background: hsl(0 0% 100% / 0.1);
@@ -172,7 +173,14 @@
         color: white;
       }
 } 
-  
+
+.dropdown-divider {
+    height: 0;
+    margin: .5rem 0;
+    overflow: hidden;
+    border-top: 1px solid #eaecf4;
+}
+
 .show {
     visibility: visible;
     opacity: 0.8;

@@ -51,3 +51,14 @@ class o_listTeacher(LoginRequiredMixin, generic.TemplateView):
             "page_title": "List Teacher",
         }
         return render(request, self.template_name, context)
+
+
+class dashboard(LoginRequiredMixin, generic.TemplateView):
+    template_name = "overseer/dashboard.html"
+    page_title = "Dashboard"
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            "page_title": "List Teacher",
+        }
+        return render(request, self.template_name, context)

@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.urls import reverse
+from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
@@ -22,3 +22,24 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.nom + " " + self.prenom
+
+
+class Classe(models.Model):
+    class_name = models.CharField(max_length=255)
+    school_year = models.CharField(max_length=20)
+    slug = models.SlugField(unique=True)
+    teacher_responsible = models.ForeignKey(
+        Teacher, on_delete=models.SET_NULL, null=True, blank=True
+    )
+    date_added = models.DateTimeField(default=timezone.now)
+    date_updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "classes"
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.class_name + "_" + self.school_year)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.class_name

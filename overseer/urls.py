@@ -5,6 +5,7 @@ app_name = "overseer"
 
 urlpatterns = [
     path("ohome/", views.oHomeview.as_view(), name="ohome"),
+    path("dashboard/", views.dashboard.as_view(), name="dashboard"),
     # Teacher views
     path("Teacher/list/", views.o_listTeacher.as_view(), name="o_listTeacher"),
     # CRUD Teacher views

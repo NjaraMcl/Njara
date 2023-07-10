@@ -148,11 +148,6 @@ function handleTeacherList() {
 }
 handleTeacherList()
 
-// Function to capitalize the first letter of each word
-function capitalizeFirstLetter(text) {
-    return text.replace(/\b\w/g, firstChar => firstChar.toUpperCase());
-
-}
 // Function to retrieve the value of a cookie by name
 function getCookie(name) {
     const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');

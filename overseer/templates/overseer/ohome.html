@@ -2,6 +2,12 @@
 {% load static %}
 {% block cont %}
     <p> Welcome to the Our site , {{ user.username|default:'Overseer' }}!</p>
+    <p class="">
+       <a href="{% url 'overseer:o_listTeacher' %}"> Teacher List </a>
+    </p>
+    <p class="">
+        <a href="#"> Class List </a>
+    </p>
 {% endblock cont %}
 {% block scripts %}
 {% endblock scripts %}
