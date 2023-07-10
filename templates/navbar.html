@@ -28,7 +28,7 @@
       {% if user.is_authenticated %}
         {% if user.is_overseer %}
           <li>
-            <a href="{% url 'overseer:o_listTeacher' %}" class="uppercase nj-flex">
+            <a href="{% url 'overseer:dashboard' %}" class="uppercase nj-flex">
               <span class="menu-icon"><i class="fa fa-light fa-school"></i></span>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -44,26 +44,27 @@
       {% endif %}
       <div class="nj-nav-right nj-flex">
         {% if user.is_authenticated %}
-          <li id="nj-btn-dropdown">
+          <li id="nj-btn-dropdown" class="nj-btn-dropdown">
             <a href="#" class="uppercase nj-flex">
-              <span class="menu-icon"><img src="{{ user.profile.image.url }}" class="user_avatar"></span>
               <span class="menu-title nj-username" id="nj-username">{{ user.get_username }}</span>
+              <span class="menu-icon"><img src="{{ user.profile.image.url }}" class="user_avatar rounded-circle"></span>
             </a>
-          </li>
-          <div class="nj-dropdown" id="nj-dropdown">
-            <li>
-              <a href="#" class="uppercase nj-flex">
-                <span class="menu-icon"><i class="fa fa-thin fa-arrow-right-from-bracket"></i></span>
-                <span class="menu-title">Profil</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="uppercase nj-flex">
-                <span class="menu-icon"><i class="fa fa-thin fa-arrow-right-from-bracket"></i></span>
-                <span class="menu-title">Logout</span>
-              </a>
-            </li>
-          </div>
+            <div class="nj-dropdown" id="nj-dropdown">         
+                <a href="#" class="uppercase nj-flex">
+                  <span class="menu-icon"><i class="fa fa-thin fa-arrow-right-from-bracket"></i></span>
+                  <span class="menu-title">Profil</span>
+                </a>
+                <a class="dropdown-item" href="#">
+                  <span class="menu-icon"><i class="fa fa-cogs"></i></span>
+                  <span class="menu-title">Settings</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="uppercase nj-flex">
+                  <span class="menu-icon"><i class="fa fa-thin fa-arrow-right-from-bracket"></i></span>
+                  <span class="menu-title">Logout</span>
+                </a>             
+            </div>
+          </li>          
           {% else %}
           <li>
             <a href="#" class="">
