@@ -31,11 +31,11 @@ function createSpan(text, className) {
   return span;
 }
 // Function to create a button element
-function createButton(className, clickHandler, iconClassName1, iconClassName2, buttonText) {
+function createButton(className, clickHandler, iconClassName, buttonText) {
   const button = document.createElement('button');
   button.classList.add(className);
   button.addEventListener('click', clickHandler);               
-  const icon = createFaElement(iconClassName1, iconClassName2);
+  const icon = createFaElement(iconClassName);
   const iconSpan = createSpan('', 'btn-icon');
   iconSpan.appendChild(icon);                       
   const textSpan = createSpan(buttonText, 'btn-name');                       
