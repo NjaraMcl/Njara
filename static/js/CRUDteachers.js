@@ -3,7 +3,9 @@ function handleTeacherList() {
     axios.get('/api/Teacher-list')
     .then(response => {
         const data = response.data;
+        const tableContainer = document.createElement('div');
         const table = document.createElement('table');
+        const tableHead = document.createElement('thead');
         const tableBody = document.createElement('tbody');
 
         if (data.length === 0) {
@@ -33,20 +35,28 @@ function handleTeacherList() {
                     headers.forEach(header => {
                         if (!['id', 'slug', 'dob', 'pob', 'date_added', 'date_updated', 't_user'].includes(header)) { // Exclude multiple headers
                             const th = document.createElement('th');
+                            th.setAttribute('scope',"col");
                             th.textContent = capitalizeFirstLetter(header); // Capitalize first letter of header
                             headerRow.appendChild(th);
                         }
                     });
                     // Add additional headers for the edit and delete buttons
-                    const editHeader = document.createElement('th');
-                    editHeader.textContent = 'Edit';
-                    editHeader.classList.add('editHeader');
-                    headerRow.appendChild(editHeader);
-                    const deleteHeader = document.createElement('th');
-                    deleteHeader.textContent = 'Delete';
-                    deleteHeader.classList.add('deleteHeader');
+                    // Function to create a header cell
+                    function createHeaderCell(text, className) {
+                        const headerCell = document.createElement('th');
+                        headerCell.setAttribute('scope', 'col');
+                        headerCell.textContent = text;
+                        headerCell.classList.add(className);
+                        return headerCell;
+                    }                    
+                    // Create and add the Edit header cell
+                    const editHeader = createHeaderCell('Edit', 'editHeader');
+                    headerRow.appendChild(editHeader);                  
+                    // Create and add the Delete header cell
+                    const deleteHeader = createHeaderCell('Delete', 'deleteHeader');
                     headerRow.appendChild(deleteHeader);
-                    tableBody.appendChild(headerRow);
+                    tableHead.appendChild(headerRow);
+                    table.appendChild(tableHead);
                     // Create table rows with data
                     data.forEach(rowData => {
                         const row = document.createElement('tr');
@@ -54,6 +64,7 @@ function handleTeacherList() {
                         headers.forEach(header => {
                             if (!['id', 'slug', 'dob', 'pob', 'date_added', 'date_updated', 't_user'].includes(header)) { // Exclude multiple headers
                                 const cell = document.createElement('td');
+                                cell.setAttribute('data-label', header);
                                 cell.textContent = rowData[header];
                                 // Add a class to the td element
                                 cell.classList.add('text-center', 'uppercase');
@@ -76,10 +87,10 @@ function handleTeacherList() {
                         // Action when the dropdow button is clicked
                         dropdownButton.addEventListener('click', function(event) {
                             const DropdownContent = document.getElementById('dropdown-content');
-                            if (dropdownContent.style.display === 'block') {
+                            if (dropdownContent.style.display === 'flex') {
                                 dropdownContent.style.display = 'none';
                               } else {
-                                dropdownContent.style.display = 'block';
+                                dropdownContent.style.display = 'flex';
                                 
                             }
                             event.stopPropagation();
@@ -94,49 +105,32 @@ function handleTeacherList() {
 
                         // create the dropdown content
                         const dropdownContent = document.createElement('div');
-                        dropdownContent.classList.add('dropdown-content');
+                        dropdownContent.classList.add('dropdown-content', 'nj-flex', 'shadow');
                         dropdownContent.setAttribute('id', 'dropdown-content');
 
-                        const editButton = document.createElement('button');
-                        editButton.classList.add('edit-button');
-
-                        const spanEditbtniconElement = document.createElement('span');
-                        spanEditbtniconElement.classList.add('btn-icon');
-
-                        const iconEditElement = document.createElement('i');
-                        iconEditElement.classList.add('fa', 'fa-edit');
-                        spanEditbtniconElement.appendChild(iconEditElement);
-
-                        const spanEditbtnnameElement = document.createElement('span');
-                        spanEditbtnnameElement.classList.add('btn-name');
-                        spanEditbtnnameElement.textContent = ' Edit';
-
-                        editButton.appendChild(spanEditbtniconElement);
-                        editButton.appendChild(spanEditbtnnameElement);
-                        
-                        editButton.addEventListener('click', function() {
+                        // Create the Edit button
+                        const editButton = createButton('edit-button', function() {
                             openEditModal(rowData.id);
-                        });
+                        }, 'fa-edit', 'Edit');
                         dropdownContent.appendChild(editButton);
-
-                        const deleteButton = document.createElement('button');
-                        deleteButton.innerHTML = '<span class="btn-icon"><i class="fa fa-trash"></i></span> <span class="btn-name">Delete</span>';
-                        deleteButton.classList.add('delete-button');
-                        deleteButton.addEventListener('click', function() {
+                        
+                        // Create the Delete button
+                        const deleteButton = createButton('delete-button', function() {
                             deleteTeacher(rowData.id);
-                        });
-                        dropdownContent.appendChild(deleteButton);
-
+                        }, 'fa-trash', 'Delete');
+                        dropdownContent.appendChild(deleteButton); 
                         dropdownCell.appendChild(dropdownContent);
                         row.appendChild(dropdownCell);
-
                         tableBody.appendChild(row);
                     });
 
+                    
                     table.appendChild(tableBody);
                     table.classList.add('table-with-border');
+                    tableContainer.appendChild(table);
+                    tableContainer.classList.add('table-container');
                     const element = document.getElementById('teacherlist-warper');
-                    element.appendChild(table);
+                    element.appendChild(tableContainer);
                 }, 500
             );
         }

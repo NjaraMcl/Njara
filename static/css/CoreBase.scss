@@ -73,6 +73,7 @@ input,button,textarea,select {
 .nj-container {
     padding: 0;
     margin-top: 2rem;
+    width: 100%;
     // Media Queries
     @media (min-width: 35rem) {
         padding-inline: 2em;
@@ -80,6 +81,14 @@ input,button,textarea,select {
         margin-top: 2rem;
         max-width: 80rem;
     }
+}
+
+.align-items-center {
+    align-items: center!important;
+}
+
+.justify-content-between {
+    justify-content: space-between!important;
 }
 
 body {
@@ -92,4 +101,10 @@ body {
     display: grid;
     grid-template-rows: min-content 1fr;
     overflow-x: hidden;
+}
+footer{
+    .sticky-footer {
+        padding: 2rem 0;
+        flex-shrink: 0;
+    }
 }

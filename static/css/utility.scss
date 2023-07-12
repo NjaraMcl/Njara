@@ -1,3 +1,5 @@
+@import 'table';
+
 .sr-only {
     position: absolute; 
     width: 1px;
@@ -17,7 +19,7 @@
     text-transform: capitalize;
 }
 .text-center{
-    text-align: center;
+    text-align: center!important;
 }
 .text-bold {
     font-weight: bold;
@@ -25,6 +27,11 @@
 .text-red {
     color: red;
 }
+
+.text-xs {
+    font-size: .7rem;
+}
+
 .form-group {
     margin-bottom: 15px;
 }
@@ -74,4 +81,59 @@
     display: none; 
 }
 
+.shadow {
+    box-shadow: 0 .15rem 1.75rem 0 hsla(235, 9%, 25%, 0.15)!important;
+}
 
+.order-0 {
+    order: 0;
+}
+  
+.order-1 {
+    order: 1;
+}
+  
+.order-2 {
+    order: 2;
+}
+  
+.order-3 {
+    order: 3;
+}
+  
+.order-4 {
+    order: 4;
+}
+  
+.order-5 {
+    order: 5;
+}
+  
+.order-6 {
+    order: 6;
+}
+  
+.order-7 {
+    order: 7;
+}
+  
+.order-8 {
+    order: 8;
+}
+  
+.order-9 {
+    order: 9;
+ }
+  
+  .order-10 {
+    order: 10;
+  }
+  
+  .order-11 {
+    order: 11;
+  }
+  
+  .order-12 {
+    order: 12;
+  }
+  

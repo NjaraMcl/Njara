@@ -1,30 +1,4 @@
-@mixin breakpoints($breakpoint) {
-    @if $breakpoint ==first {
-        @media (max-width: 35) {
-            @content;
-        }
-    }
-    @if $breakpoint ==second {
-        @media (min-width: 35rem) {
-            @content;
-        }
-    }
-    @if $breakpoint ==third {
-        @media (min-width: 35rem) and (max-width: 45rem) {
-            @content;
-        }
-    }
-    @if $breakpoint ==forth {
-        @media (min-width: 45) and (max-width: 55rem) {
-            @content;
-        }
-    }
-    @if $breakpoint ==fifth {
-        @media (min-width: 45rem) {
-            @content;
-        }
-    }
-}
+@import 'mixins';
 
 @supports (backdrop-filter: blur(1rem)) {
     .nj-navigation {
@@ -91,11 +65,11 @@ body{
                 list-style: none;
                 padding: min(20rem, 15vh) 2rem;
                 margin: 0;
-                transform: translateX(100%);
+                @include transform(translateX(100%));
                 transition: transform 350ms ease-in-out;
                 flex-direction: column;
                 &[data-visible="true"] {
-                    transform: translateX(0);
+                    @include transform(translateX(0));
                 }
                 a {
                     text-decoration: none;

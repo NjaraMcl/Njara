@@ -1,9 +1,26 @@
-{% extends "base.html" %}
-{% load static %}
-{% block cont %}
-<p class="text-center text-capitalize text-bold">
-Dashboard
-</p>
-{% endblock cont %}
-{% block scripts %}
+{% extends "base.html" %} {% load static %} {% block cont %}
+<h1>Dashboard</h1>
+<div class=""></div>
+<div class="nj-row">
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="nj-card border-left-primary shadow h-100 py-2">
+      <div class="nj-card-body">
+        <div class="nj-row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs text-bold text-primary uppercase mb-1">
+              Teacher
+            </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class=""></div>
+{% endblock cont %} {% block scripts %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
 {% endblock scripts %}
