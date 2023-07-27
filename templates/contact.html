@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block cont %}
+<!-- contact.html -->
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Envoyer</button>
+</form>
+
+{% if message_sent %}
+  <script>
+    alert("Message envoyé avec succès !");
+  </script>
+{% endif %}
+
+{% endblock cont %}
+{% block scripts %}
+{% endblock scripts %}

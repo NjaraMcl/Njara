@@ -181,30 +181,50 @@ function handleEdit(teacherId) {
                 { label: 'Birth date', name: 'dob', value: teacherData.dob, placeholder: ' Birth Date' },
                 { label: 'Birth place', name: 'pob', value: teacherData.pob, placeholder: ' Birth Place' }
             ];
-            const formElements = formFields.map(field => {
-                return `
-                  <div class="form-group nj-formLabelImput">
-                    <label for="${field.name}">${field.label}:</label>
-                    <input type="text" id="${field.name}" name="${field.name}" value="${field.value}" class="form-control" required>
-                  </div>
-                `;
+            const formContainer = document.createElement('form');
+            formContainer.id = 'editForm';
+            formContainer.className = 'editForm';
+
+            formFields.forEach(field => {
+                const formGroupDiv = document.createElement('div');
+                formGroupDiv.className = 'form-group nj-formLabelImput';
+
+                const label = document.createElement('label');
+                label.setAttribute('for', field.name);
+                label.textContent = `${field.label}:`;
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.id = field.name;
+                input.name = field.name;
+                input.value = field.value;
+                input.className = 'form-control';
+                input.required = true;
+
+                formGroupDiv.appendChild(label);
+                formGroupDiv.appendChild(input);
+
+                formContainer.appendChild(formGroupDiv);
             });
 
-            // Update the modal content with the teacher's data
-            const modalContent = `
-                <form id="editForm" class="editForm">
-                ${formElements.join('')}
-                <button aria-label="Save" type="submit" class="modal-submit-btn">Save</button>
-                </form>
-            `;
+            const submitButton = document.createElement('button');
+            submitButton.setAttribute('aria-label', 'Save');
+            submitButton.type = 'submit';
+            submitButton.className = 'modal-submit-btn';
+            submitButton.textContent = 'Save';
 
-            // Set the content of the modal
-            const njcardtitle = document.getElementById("nj-card-title");
+            formContainer.appendChild(submitButton);
+
+            // Add event listener to the form
+            formContainer.addEventListener('submit', event => handleEditFormSubmit(event, teacherId));
+
+            // Append the form to the modalContainer
             const njcardform = document.getElementById("nj-card-form");
+            njcardform.appendChild(formContainer);
+
+            // Set the content of the modal title
+            const njcardtitle = document.getElementById("nj-card-title");
             njcardtitle.textContent = teacherData.nom + " " + teacherData.prenom;
-            njcardform.innerHTML = modalContent;
-            const editForm = document.getElementById('editForm');
-            editForm.addEventListener('submit', event => handleEditFormSubmit(event, teacherId));
         })
     
         .catch(error => {

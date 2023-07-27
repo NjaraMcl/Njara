@@ -9,6 +9,16 @@ User = get_user_model()
 sex_choice = (("Male", "Male"), ("Female", "Female"))
 
 
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    subject = models.CharField(max_length=200)
+    message = models.TextField()
+
+    def __str__(self):
+        return self.subject
+
+
 class Teacher(models.Model):
     nom = models.CharField(max_length=250, blank=True, null=True)
     prenom = models.CharField(max_length=250, blank=True, null=True)
