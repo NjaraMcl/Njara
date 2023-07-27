@@ -40,16 +40,9 @@ class AddTeacher(LoginRequiredMixin, FormView):
 # Retrive teacher
 class o_listTeacher(LoginRequiredMixin, generic.TemplateView):
     template_name = "overseer/CRUD/teacher/o_listTeacher.html"
-    form_class = addTeacherForm
 
     def get(self, request, *args, **kwargs):
-        listTeacher = Teacher.objects.all()
-        form = self.form_class()
-        context = {
-            "listTeacher": listTeacher,
-            "Addform": form,
-            "page_title": "List Teacher",
-        }
+        context = {"page_title": "List Teacher"}
         return render(request, self.template_name, context)
 
 
@@ -59,6 +52,17 @@ class dashboard(LoginRequiredMixin, generic.TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = {
-            "page_title": "List Teacher",
+            "page_title": self.page_title,
+        }
+        return render(request, self.template_name, context)
+
+
+class ClasseView(LoginRequiredMixin, generic.TemplateView):
+    template_name = "overseer/CRUD/classe/classe.html"
+    page_title = "Liste Classes"
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            "page_title": self.page_title,
         }
         return render(request, self.template_name, context)

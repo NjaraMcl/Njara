@@ -9,4 +9,6 @@ urlpatterns = [
     path("Teacher-create/", views.TeacherCreate, name="Teacher-create"),
     path("Teacher-update/<str:pk>/", views.TeacherUpdate, name="Teacher-update"),
     path("Teacher-delete/<str:pk>/", views.TeacherDelete, name="Teacher-delete"),
+    # List & CRUD Classe views
+    path("Classe-list/", views.ClasseList, name="Classe-list"),
 ]
